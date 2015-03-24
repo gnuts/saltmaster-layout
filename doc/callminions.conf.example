@@ -1,0 +1,10 @@
+# callminions configuration file
+
+#
+# add this line to sshd_config at the minion-proxy
+# GatewayPorts clientspecified
+#
+
+maxruntime="28800"
+servers="192.168.1.1:22"
+
