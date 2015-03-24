@@ -3,4 +3,4 @@
 
 base:
   '*':
-    - hostmap
+    - formulamap
