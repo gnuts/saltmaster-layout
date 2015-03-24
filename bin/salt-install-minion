@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Variablen:
+# $HOST:         Hostname/IP-Adresse des Hosts wo der Minion installiert wird
+# $PROXY:        Falls eine Proxy für http gebraucht wird, benötigt für z.B. gpg-key-download bei debian; Format: http://hostnameip:port
+# $SALTMASTER:   Hostname/IP-Adresse über den saltmaster erreicht wird
+# $NOCHECK:      SSH-Hostkey nicht prüfen und nicht speichern
+# $SCRIPT:       Das Salt-Bootstrap-Script, welches umgleitet wird 
+#
+# Erklaerung:
+# -o StrictHostKeyChecking=no:      Nicht nach Bestätigung für den Hostkey fragen
+# -o UserKnownHostsFile=/dev/null:  Damit der automatisch bestätigte Hostkey nicht gespeichert wird
+# Per SSH verbindet man sich auf den entfernten Rechner und startet dort "bash -s", dorthin wird dann das Script umgeleitet.
+# Das "--" ist notwendig, damit Argumente des Scripts nicht von der (remote) bash interpretiert wird.
+
+if [ $# != 2 -a $# != 4 ]
+then
+    echo "Aufruf: remote-minion-install.sh <host> <saltmaster> [proxyhost] [proxyport]"
+    exit
+elif [ $# == 4 ]
+then
+    PROXY="http_proxy=\"http://$3:$4\""
+fi
+
+    HOST="$1"
+    SALTMASTER="$2"
+    SCRIPTPATH="$(dirname $(readlink -f $0))"
+    SCRIPT="$SCRIPTPATH/bootstrap-salt.sh"
+
+    # SCRIPT
+    echo "#################################"
+    echo "Baue SSH-Verbindung zu $HOST auf."
+    echo "#################################"
+    sleep 3
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "root@$HOST" "$PROXY bash -s" -- < "$SCRIPT" -A "$SALTMASTER"
+
