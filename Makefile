@@ -159,7 +159,7 @@ pushall:
 
 version: status
 status:
-	@echo "this is $(PNAME) $(DEBVERSION) build $(BUILD)"
+	@echo "this is $(PNAME) $(DEBVERSION) commit $(BUILD)"
 
 upload: move-packages
 	rsync -vP ../stable/*deb root@$(REPOSITORY):/tmp/ 
