@@ -1,0 +1,12 @@
+# HA Authkeys
+#
+# !!! THIS FILE IS MANAGED !!!
+# !!! CHANGES WILL BE LOST !!!
+#
+
+auth {{ defaultkey }}
+
+{%- for authkey in authkeys %}
+{{ authkey }}
+{%- endfor %}
+
