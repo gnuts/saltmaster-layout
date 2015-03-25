@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# dev tool
-# list details about included formulas
-#
-# WORK IN PROGRESS!
+# this is a dev tool and not part of the installation package
+# * list included formulas
+# * subtree add included formulas
+# * subtree pull included formulas
+
 
 LIBDIR="formulas-lib"
 FCONF="$LIBDIR/formulas.conf"
@@ -48,15 +49,24 @@ function formulas_list {
   done
 }
 
-function formulas_add {
+function formulas_process {
+
+  if [ "$1" != "add" -a "$1" != "pull" ]; then
+    fmode=$1;
+    shift
+  else
+    echo "formulas_process needs mod add or pull"
+    exit 1
+  fi
 
   fnames="$LIST"
   if [ -n "$1" ]; then
     fnames=$1;
+    shift
   fi
 
-  echo "adding missing formulas."
-  echo "checking: $fnames"
+  echo "processing formulas. mode: $mode"
+  echo "configured formulas: $fnames"
   read
   for fname in $fnames; do
     fdir="${fname}-formula"
@@ -65,23 +75,17 @@ function formulas_add {
     furl=$(get_url $fname)
 
     echo -n "== Formula \"$fname\": "
-    if [ -d "$fpath" ]; then
-      echo "** already there **"
-    else
-      echo "branch: $fbranch url: $furl"
-      echo
-      echo -n "press ENTER to add subtree to $fpath"
-      read
-      echo
-      echo
-      set -e
-      git subtree add -P "$fpath"  --squash "$furl" "$fbranch"
-      set +e
-      echo
-      echo "formula $fname subtree added"
-      echo
-      echo
-    fi
+    echo "branch: $fbranch url: $furl"
+    echo
+    echo -n "press ENTER to add subtree to $fpath"
+    read
+    echo
+    echo
+    git subtree $mode -P "$fpath"  --squash "$furl" "$fbranch"
+    echo
+    echo "formula $fname subtree command finished"
+    echo
+    echo
   done
 
 }
@@ -90,8 +94,11 @@ case "$MODE" in
   list)
     formulas_list
    ;;
+  pull)
+    formulas_process "pull" $@
+    ;;
   add)
-    formulas_add $@
+    formulas_process "add" $@
     ;;
   *)
     usage
