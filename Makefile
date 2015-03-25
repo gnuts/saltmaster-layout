@@ -117,7 +117,11 @@ install: clean update-doc
 		rsync -q formulas-lib/$${fname}-formula/* "$(INST_USRSHAREDOCDIR)/$${fname}/" ; \
 		rsync -qr "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
 	done
-	
+
+	# add formulas information to doc dir
+	echo "This package contains the following formulas (name, branch and url):" >$(INST_USRSHAREDOCDIR)/formulas.txt
+	echo >>$(INST_USRSHAREDOCDIR)/formulas.txt
+	sort formulas-lib/formulas.conf >> $(INST_USRSHAREDOCDIR)/formulas.txt
 
 package: docs debian-package move-packages
 debian-package:
