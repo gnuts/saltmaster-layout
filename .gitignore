@@ -3,3 +3,4 @@ formulas-lib/*formula
 debian/saltmaster-layout
 debian/files
 debian/*.debhelper.log
+debian/*.substvars
