@@ -2,18 +2,90 @@
 
 # dev tool
 # list details about included formulas
+#
+# WORK IN PROGRESS!
 
+LIBDIR="formulas-lib"
+FCONF="$LIBDIR/formulas.conf"
 set -e
-libdir="formulas-lib"
-flist="$libdir"/formulas.list
-list=$(cat "$flist")
+LIST=$(cut -d" " -f1 "$FCONF"|tr '\n' ' ')
+set +e 
 
-for fname in $list; do
-  fdir="${fname}-formula"
-  echo "formula: $fname"
-  echo "===="
-  if [ ! -d $fdir ]; then
-    echo "* not found"
-  fi
+MODE=$1
+shift
+
+function usage {
+  echo "usage: $0 <mode>"
   echo
-done
+  echo "modes:"
+  echo
+  echo "list    - show all formulas"
+  echo
+  exit 1
+}
+
+function get_url {
+  echo $(grep -E "^$1 " $FCONF |tr -s " "|cut -d " " -f 3)
+}
+
+function get_branch {
+  echo $(grep -E "^$1 " $FCONF |tr -s " "|cut -d " " -f 2)
+}
+
+function formulas_list {
+  for fname in $LIST; do
+    fdir="${fname}-formula"
+    fpath="$LIBDIR/$fdir"
+    echo -n "formula $fname: "
+    if [ ! -d $fpath ]; then
+      echo "**NOT FOUND**"
+    else
+      echo "$fdir branch:$(get_branch $fname) url:$(get_url $fname)"
+    fi
+  done
+}
+
+function formulas_add {
+
+  fnames="$LIST"
+  if [ -n "$1" ]; then
+    fnames=$1;
+  fi
+
+  echo "adding missing formulas."
+  echo "checking: $fnames"
+  read
+  for fname in $fnames; do
+    fdir="${fname}-formula"
+    fpath="$LIBDIR/${fname}-formula"
+    fbranch=$(get_branch $fname)
+    furl=$(get_url $fname)
+
+    echo -n "formula \"$fname\": "
+    if [ -d "$fpath" ]; then
+      echo "** already there **"
+    else
+      echo "branch: $fbranch url: $furl"
+      echo
+      echo "press ENTER to add subtree to $fpath"
+      echo
+      read
+      set -e
+      git subtree add -P "$fpath"  --squash "$furl" "$branch"
+      set +e
+    fi
+  done
+
+}
+
+case "$MODE" in
+  list)
+    formulas_list
+   ;;
+  add)
+    formulas_add $@
+    ;;
+  *)
+    usage
+    ;;
+esac
