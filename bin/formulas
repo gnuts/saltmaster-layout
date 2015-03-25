@@ -76,6 +76,10 @@ function formulas_add {
       set -e
       git subtree add -P "$fpath"  --squash "$furl" "$fbranch"
       set +e
+      echo
+      echo "formula $fname subtree added"
+      echo
+      echo
     fi
   done
 
