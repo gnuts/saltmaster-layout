@@ -1,0 +1,18 @@
+#
+# resolv.conf
+# 
+# !!! THIS FILE IS MANAGED !!!
+# !!! CHANGES WILL BE LOST !!!
+#
+
+{%- for nameserver in dnsserver %}
+nameserver {{ nameserver }}
+{%- endfor %}
+
+domain {{ dnsdomain }}
+
+{%- if dnssearch|count > 0 %}
+search {% for search in dnssearch %}{{ search }} {% endfor %}
+{%- endif %}
+
+

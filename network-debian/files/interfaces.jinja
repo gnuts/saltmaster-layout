@@ -1,0 +1,39 @@
+#
+# interfaces configuration
+#
+# !!! THIS FILE IS MANAGED !!!
+# !!! CHANGES WILL BE LOST !!!
+#
+
+auto lo
+iface lo inet loopback
+
+{%- for name,interface in interfaces.iteritems() %}
+
+{%- if interface.name is defined %}
+{%- set iname = interface.name %}
+{%- else %}
+{%- set iname = name %}
+{%- endif %}
+
+# {{ name }}
+# {{ interface.get('comment','') }}
+#
+{%- if (interface.enabled is defined) and (interface.enabled is sameas true) %}
+auto {{ iname }}
+{%- endif %}
+
+iface {{ iname }} {{ interface.type }} {{ interface.proto }}
+{%- if interface.address is defined %}
+  address {{ interface.address }}
+  netmask {{ interface.netmask }}
+  up /etc/network/routes
+{%- endif %}  
+
+{%- if interface.options is defined %}
+{%-   for option in interface.options %}
+  {{ option }}
+{%- endfor %}
+{%- endif %}
+
+{%- endfor %}
