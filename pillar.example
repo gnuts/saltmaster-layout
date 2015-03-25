@@ -1,0 +1,18 @@
+heartbeat:
+  auth:
+    defaultkey: '1'
+    authkeys:
+      - '1 sha1 myverysecretauthkey'
+  nodes:
+    - name: 'minion1'
+      id: 'minion1.example.ninja'
+      neighbours:
+        - 'eth0 192.168.1.14'
+      resources:
+        - 'IPaddr2::192.168.1.15/24/eth0'
+
+    - name: 'minion2'
+      id: 'minion2.example.ninja'
+      neighbours:
+        - 'eth0 192.168.1.13'
+
