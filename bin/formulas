@@ -64,7 +64,7 @@ function formulas_add {
     fbranch=$(get_branch $fname)
     furl=$(get_url $fname)
 
-    echo -n "formula \"$fname\": "
+    echo -n "== Formula \"$fname\": "
     if [ -d "$fpath" ]; then
       echo "** already there **"
     else
