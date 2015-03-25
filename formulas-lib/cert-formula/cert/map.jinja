@@ -1,0 +1,25 @@
+{% set map = salt['grains.filter_by']({
+    'Debian': {
+        'cert_dir': '/etc/ssl/certs',
+        'key_dir': '/etc/ssl/private',
+        'pkgs': [ 'ca-certificates', 'ssl-cert' ],
+        'cert_user': 'root',
+        'key_user': 'root',
+        'cert_group': 'root',
+        'key_group': 'ssl-cert',
+        'cert_mode': 644,
+        'key_mode': 640,
+    },
+    'Ubuntu': {
+        'cert_dir': '/etc/ssl/certs',
+        'key_dir': '/etc/ssl/private',
+        'pkgs': [ 'ca-certificates', 'ssl-cert' ],
+        'cert_user': 'root',
+        'key_user': 'root',
+        'cert_group': 'root',
+        'key_group': 'ssl-cert',
+        'cert_mode': 644,
+        'key_mode': 640,
+    },
+
+}, grain='os', merge=salt['pillar.get']('cert:lookup')) %}

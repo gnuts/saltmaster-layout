@@ -1,0 +1,11 @@
+{% set map = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': ['openssh-server'],
+        'service': 'ssh',
+        'conf_dir': '/etc/ssh',
+        'conf_file': 'sshd_config',
+        'user': 'root',
+        'group': 'root',
+        'mode': '644'
+    },
+}, grain='os', merge=salt['pillar.get']('ssh:lookup')) %}

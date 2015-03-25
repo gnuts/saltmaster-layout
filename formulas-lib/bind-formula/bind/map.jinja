@@ -1,0 +1,29 @@
+{% set map = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': ['bind9', 'bind9utils', 'dnssec-tools'],
+        'service': 'bind9',
+        'config': '/etc/bind/named.conf',
+        'local_config': '/etc/bind/named.conf.local',
+        'key_config': '/etc/bind/named.conf.key',
+        'options_config': '/etc/bind/named.conf.options',
+        'default_zones_config': '/etc/bind/named.conf.default-zones',
+        'named_directory': '/var/cache/bind/zones',
+        'log_dir': '/var/log/bind9',
+        'user': 'root',
+        'group': 'bind'
+    },
+    'RedHat': {
+        'pkgs': ['bind'],
+        'service': 'named',
+        'config': '/etc/named.conf',
+        'local_config': '/etc/named.conf.local',
+        'named_directory': '/var/named/data',
+        'log_dir': '/var/log/named',
+        'user': 'root',
+        'group': 'named'
+    },
+}, merge=salt['grains.filter_by']({
+    'Ubuntu': {
+        'log_dir': '/var/log/named'
+    },
+}, grain='os', merge=salt['pillar.get']('bind:lookup'))) %}

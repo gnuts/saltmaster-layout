@@ -1,0 +1,104 @@
+#!/bin/bash
+
+# this is a dev tool and not part of the installation package
+# * list included formulas
+# * subtree add included formulas
+# * subtree pull included formulas
+
+
+LIBDIR="formulas-lib"
+FCONF="$LIBDIR/formulas.conf"
+set -e
+LIST=$(cut -d" " -f1 "$FCONF"|tr '\n' ' ')
+set +e 
+
+MODE=$1
+shift
+
+function usage {
+  echo "usage: $0 <mode>"
+  echo
+  echo "modes:"
+  echo
+  echo "list    - show all formulas"
+  echo "add     - subtree add missing formulas"
+  echo
+  echo "configuration file is: $FCONF"
+  echo
+  exit 1
+}
+
+function get_url {
+  echo $(grep -E "^$1 " $FCONF |tr -s " "|cut -d " " -f 3)
+}
+
+function get_branch {
+  echo $(grep -E "^$1 " $FCONF |tr -s " "|cut -d " " -f 2)
+}
+
+function formulas_list {
+  for fname in $LIST; do
+    fdir="${fname}-formula"
+    fpath="$LIBDIR/$fdir"
+    echo -n "formula $fname: "
+    if [ ! -d $fpath ]; then
+      echo "**NOT FOUND**"
+    else
+      echo "$fdir branch:$(get_branch $fname) url:$(get_url $fname)"
+    fi
+  done
+}
+
+function formulas_process {
+
+  fmode=$1;
+  shift
+
+  if [ "$fmode" != "add" -a "$fmode" != "pull" ]; then
+    echo "formulas_process needs mode add or pull"
+    exit 1
+  fi
+
+  fnames="$LIST"
+  if [ -n "$1" ]; then
+    fnames=$1;
+    shift
+  fi
+
+  echo "processing formulas. mode: $mode"
+  echo "configured formulas: $fnames"
+  read
+  for fname in $fnames; do
+    fdir="${fname}-formula"
+    fpath="$LIBDIR/${fname}-formula"
+    fbranch=$(get_branch $fname)
+    furl=$(get_url $fname)
+
+    echo -n "== Formula \"$fname\": "
+    echo "branch: $fbranch url: $furl"
+    echo
+    echo -n "press ENTER to add subtree to $fpath"
+    read
+    echo
+    git subtree $fmode -P "$fpath"  --squash "$furl" "$fbranch"
+    echo "formula $fname subtree command finished"
+    echo
+    echo
+  done
+
+}
+
+case "$MODE" in
+  list)
+    formulas_list
+   ;;
+  pull)
+    formulas_process "pull" $@
+    ;;
+  add)
+    formulas_process "add" $@
+    ;;
+  *)
+    usage
+    ;;
+esac
