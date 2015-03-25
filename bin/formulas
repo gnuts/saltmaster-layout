@@ -20,6 +20,9 @@ function usage {
   echo "modes:"
   echo
   echo "list    - show all formulas"
+  echo "add     - subtree add missing formulas"
+  echo
+  echo "configuration file is: $FCONF"
   echo
   exit 1
 }
@@ -71,7 +74,7 @@ function formulas_add {
       echo
       read
       set -e
-      git subtree add -P "$fpath"  --squash "$furl" "$branch"
+      git subtree add -P "$fpath"  --squash "$furl" "$fbranch"
       set +e
     fi
   done
