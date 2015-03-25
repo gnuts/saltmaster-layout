@@ -88,48 +88,35 @@ install: clean update-doc
 	mkdir -p $(INST_LIBDIR)
 	mkdir -p $(INST_LIBDIR)/formulas
 	mkdir -p $(INST_LIBDIR)/extensions
-	
-	# install template and extensions
-	rsync -rv  template $(INST_USRSHAREDIR)/
-	rsync -rv  extensions  $(INST_LIBDIR)/
-	rsync -rv  lib/ $(INST_LIBDIR)/
-	rsync -rv  etc/ $(INST_ETCDIR)/
-	chown -R root:root $(INST_USRSHAREDIR) $(INST_LIBDIR)
-	chmod -R u=rwX,go=rX $(INST_USRSHAREDIR) $(INST_LIBDIR) $(INST_ETCDIR) 
-
-	# copy makefile to template dir, too
-	cp -a $(INST_LIBDIR)/Makefile $(INST_USRSHAREDIR)/template/
-
-	# now for each formula:
-	# copy files from $(formulaname)-formula to $(doc)/formulas/$(formulaname)
-	# copy $(formulaname-formula/$(formulaname) to libdir
-	
-	for fname in $(FORMULAS); do \
-		echo "install formula $$fname"; \
-		rsync -r "formulas-lib/$${fname}-formula/$${fname}" $(INST_LIBDIR)/formulas/ ; \
-		mkdir "$(INST_USRSHAREDOCDIR)/$${fname}" ; \
-		( cd "formulas-lib/$${fname}-formula/" && rsync *.rst *.md *.example $(INST_USRSHAREDOCDIR)/$${fname}/ ) ; \
-		rsync -r "formulas-lib/$${fname}-formula/$${fname}" $(INST_LIBDIR)/formulas/ ; \
-	done
-
-	# install configs
-	#mkdir -p $(INST_ETCDIR)
 
 	#
 	# binaries
 	#
 	install -g root -o root -m 755 bin/salt-callminions  $(INST_BINDIR)/
 	install -g root -o root -m 755 bin/salt-install-minion $(INST_BINDIR)/
-	#cp Makefile.saltsite $(INST_USRSHAREDIR)/saltsite-templates
 	
-	
-	# configuration
 	#
-	
-	# support files
+	# install template and extensions
 	#
-	#install -o root -g root -m 644 share/default.template    $(INST_USRSHAREDIR)
+	rsync -r  template $(INST_USRSHAREDIR)/
+	rsync -r  extensions  $(INST_LIBDIR)/
+	rsync -r  lib/ $(INST_LIBDIR)/
+	rsync -r  etc/ $(INST_ETCDIR)/
+	chown -R root:root $(INST_USRSHAREDIR) $(INST_LIBDIR)
+	chmod -R u=rwX,go=rX $(INST_USRSHAREDIR) $(INST_LIBDIR) $(INST_ETCDIR) 
+	cp -a $(INST_LIBDIR)/Makefile $(INST_USRSHAREDIR)/template/
 
+	# 
+	# copy formulas to doc and lib
+	# 
+	@for fname in $(FORMULAS); do \
+		echo "install formula $$fname" ; \
+		rsync -r "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
+		mkdir "$(INST_USRSHAREDOCDIR)/$${fname}" ; \
+		rsync -q formulas-lib/$${fname}-formula/* "$(INST_USRSHAREDOCDIR)/$${fname}/" ; \
+		rsync -qr "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
+	done
+	
 
 package: docs debian-package move-packages
 debian-package:
