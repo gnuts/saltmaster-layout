@@ -7,7 +7,7 @@ Standards-Version: 3.9.3
 Homepage: https://github.com/gnuts/saltmaster-layout
 
 Package: saltmaster-layout
-Architecture: any
+Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: utilities templates and formulas for salt
  This package contains a proposed layout for a salt master as well as
