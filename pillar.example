@@ -1,0 +1,34 @@
+# Defaults are set as in debian and are shown below
+# Just add other values as desired, e.g. GatewayPorts: yes
+
+ssh:
+  StrictModes: yes
+  IgnoreRhosts: yes
+  PermitEmptyPasswords: no
+  PasswordAuthentication: yes
+  PermitRootLogin: yes
+  HostKey:
+    - /etc/ssh/ssh_host_rsa_key
+    - /etc/ssh/ssh_host_dsa_key
+    - /etc/ssh/ssh_host_ecdsa_key
+  LogLevel: INFO
+  X11DisplayOffset: 10
+  AcceptEnv: LANG LC_*
+  TCPKeepAlive: yes
+  X11Forwarding: yes
+  KeyRegenerationInterval: 3600
+  Subsystem: sftp /usr/lib/openssh/sftp-server
+  ServerKeyBits: 768
+  UsePrivilegeSeparation: yes
+  SyslogFacility: AUTH
+  RhostsRSAAuthentication: no
+  PrintLastLog: yes
+  ChallengeResponseAuthentication: no
+  LoginGraceTime: 120
+  PubkeyAuthentication: yes
+  UsePAM: yes
+  Protocol: 2
+  PrintMotd: no
+  HostbasedAuthentication: no
+  RSAAuthentication: yes
+  Port: 22
