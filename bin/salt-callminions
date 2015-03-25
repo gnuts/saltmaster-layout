@@ -1,0 +1,141 @@
+#!/bin/bash
+
+conf="/srv/saltmaster/config/callminions.conf"
+
+maxruntime="28800"
+servers="xxx:22"
+
+
+set -e
+source "$conf"
+set +e
+
+# first of all, check whether users act according to policy:
+
+if [ "$UID" ==  "0" ]; then
+    cat <<'EOF'
+
+
+
+
+
+    _                _                    _                            _
+ __| |___   _ _  ___| |_  __ __ _____ _ _| |__  __ _ ___  _ _ ___  ___| |_
+/ _` / _ \ | ' \/ _ \  _| \ V  V / _ \ '_| / / / _` (_-< | '_/ _ \/ _ \  _|
+\__,_\___/ |_||_\___/\__|  \_/\_/\___/_| |_\_\ \__,_/__/ |_| \___/\___/\__|
+
+
+
+
+EOF
+    exit 1
+fi
+
+
+
+# open salt master ports on gateway servers
+PIDS=""
+
+# catch CTRL-C
+trap "usequit" SIGINT
+
+function usequit {
+
+    echo "use 'q' to quit, not CTRL-C, please."
+
+}
+
+function start_tunnels {
+    echo "starting tunnels"
+    PIDS=""
+    for host in $servers; do 
+        # dirty hack to allow ports:
+        conn=$(echo "$host" | perl -p -e 's/:/ -p /')
+        echo "starting tunnel for $conn"
+        ssh  -C -l root $conn -g -R 0.0.0.0:4505:127.0.0.1:4505 -R 0.0.0.0:4506:127.0.0.1:4506 'while true; do echo "tunnel open: $(hostname): $(uptime)";sleep 60;done' &
+
+        PIDS="$PIDS $!"
+    done
+}
+
+function test_tunnels {
+    echo "testing tunnels"
+    for host in $servers; do 
+        echo "===="
+        echo "$host"
+        echo "===="
+        conn=$(echo "$host" | perl -p -e 's/:/ -p /')
+        echo "starting tunnel for $conn:"
+        ssh -C -l root $conn 'echo $(hostname): $(uptime)'
+    done
+}
+
+
+function kill_tunnels {
+    echo "killing tunnels"
+    if [ -n "$PIDS" ]; then
+      kill $PIDS
+      PIDS=""
+    else
+      echo "there are no tunnels"
+    fi
+}
+
+tstart=$(date +%s)
+start_tunnels
+
+while true; do
+    tnow=$(date +%s)
+    delta=$(expr $tnow - $tstart)
+
+    if [ "$delta" -gt "$maxruntime" ]; then
+        echo
+        echo "maximum runtime reached. quitting after $delta seconds"
+        break
+    fi
+
+    echo
+    echo "---"
+    echo "callminions is running since $delta seconds."
+    echo "'q' to quit"
+    echo "'r' restart all tunnels"
+    echo "'k' kill all tunnels"
+    echo "'t' connection test"
+    echo "---"
+    read -N 1 -t 130 x
+    echo
+    if [ "$x" == "q" ]; then
+        break
+    elif [ "$x" == "t" ]; then
+        echo
+        echo "restarting tunnels"
+        kill_tunnels
+        sleep 3
+        test_tunnels
+        echo "done. you can now restart the tunnels"
+        continue
+    elif [ "$x" == "r" ]; then
+        echo
+        echo "killing all tunnels"
+        kill_tunnels
+        sleep 3
+        start_tunnels
+        continue
+    elif [ "$x" == "k" ]; then
+        echo
+        echo "killing all tunnels"
+        kill_tunnels
+        continue
+    else
+        echo "unknown command"
+        continue
+    fi
+done
+
+echo
+kill_tunnels
+echo "bye bye"
+echo
+exit 0
+
+

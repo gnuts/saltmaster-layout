@@ -1,0 +1,7 @@
+saltmaster-layout: script-not-executable usr/lib/saltmaster-layout/Makefile
+saltmaster-layout: script-not-executable usr/lib/saltmaster-layout/formulas/conntrack/files/conntrack-mode
+saltmaster-layout: script-not-executable usr/lib/saltmaster-layout/formulas/conntrack/files/primary-backup
+saltmaster-layout: script-not-executable usr/lib/saltmaster-layout/formulas/network-debian/files/routes.jinja
+saltmaster-layout: shell-script-fails-syntax-check usr/lib/saltmaster-layout/formulas/network-debian/files/routes.jinja
+saltmaster-layout: script-not-executable usr/share/saltmaster-layout/template/Makefile
+

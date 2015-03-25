@@ -1,0 +1,10 @@
+The Debian Package saltmaster-layout
+----------------------------
+
+a saltmaster template structure can be found in
+
+/usr/share/saltmaster-layout/template
+
+you can copy this to e.g. /srv/salt/ as a starting point
+
+ -- Matthias Nuessle <mn@mawoh.de>  Wed, 25 Mar 2015 10:33:04 +0100
