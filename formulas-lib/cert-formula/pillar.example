@@ -1,0 +1,17 @@
+cert:
+  certlist:
+    name_of_cert:
+      key: |
+        KEY HERE
+    name_of_2nd_cert:
+      key: |
+        KEY HERE
+      cert_user: root
+      key_user: root
+      cert_group: root
+      key_group: ssl-cert
+      cert_mode: 644
+      key_mode: 640
+      cert_dir: /etc/ssl/certs/
+      key_dir: /etc/ssl/private
+    name_of_3rd_cert: {} # cert has no private key to deploy  
