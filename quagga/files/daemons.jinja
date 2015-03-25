@@ -1,0 +1,15 @@
+zebra=yes
+{%- if bgpd %}
+bgpd=yes
+{%- else %}
+bgpd=no
+{%- endif %}
+ospfd=no
+ospf6d=no
+{%- if ripd %}
+ripd=yes
+{%- else %}
+ripd=no
+{%- endif %}
+ripngd=no
+isisd=no
