@@ -38,7 +38,6 @@ SHELL	 		= /bin/bash
 
 
 BINFILES = salt-callminions salt-install-minion
-FORMULAS = conntrack heartbeat network-debian quagga users
 
 
 .PHONY: help build clean test doc docs update-doc install version release clean upload package
@@ -110,7 +109,8 @@ install: clean update-doc
 	# 
 	# copy formulas to doc and lib
 	# 
-	@for fname in $(FORMULAS); do \
+	formulas=$$(cut -d" " -f1 formulas-lib/formulas.conf) && \
+	for fname in $$formulas; do \
 		echo "install formula $$fname" ; \
 		rsync -r "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
 		mkdir "$(INST_USRSHAREDOCDIR)/$${fname}" ; \
