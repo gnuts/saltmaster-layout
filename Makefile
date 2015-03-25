@@ -3,8 +3,9 @@
 PNAME    		= saltmaster-layout
 PDESC    		= saltmaster-layout - a basic salt master infrastructure and many formulas from github 
 
-REPOSITORY 		= ""
-REPODIR 		= ""
+REPOSITORY 	= "deb.mawoh.org"
+REPODIR 		= "/var/www/reprepro"
+DISTNAME    = mawoh
 
 DESTDIR 		?= /
 USRPREFIX  		?= /usr
@@ -167,7 +168,7 @@ status:
 	@echo "this is $(PNAME) $(DEBVERSION) commit $(BUILD)"
 
 upload: move-packages
-	rsync -vP ../stable/*deb root@$(REPOSITORY):/tmp/ 
-	ssh -l root $(REPOSITORY) 'cd $(REPODIR) && for f in /tmp/*deb; do reprepro includedeb squeeze $$f;done'
+	rsync -vP ../packages/$(PNAME)*deb root@$(REPOSITORY):/tmp/ 
+	ssh -l root $(REPOSITORY) 'cd $(REPODIR) && for f in /tmp/*deb; do reprepro includedeb $(DISTNAME) $$f;done'
 
 

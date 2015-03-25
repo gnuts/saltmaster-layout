@@ -1,3 +1,9 @@
+saltmaster-layout (0.2) UNRELEASED; urgency=low
+
+  * not released yet
+
+ -- Matthias Nuessle <mn@mawoh.de>  Wed, 25 Mar 2015 16:13:17 +0100
+
 saltmaster-layout (0.1) unstable; urgency=low
 
   * Initial Release.
