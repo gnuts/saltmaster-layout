@@ -1,0 +1,20 @@
+# Managed by saltstack
+{% set settings = salt['pillar.get']('zabbix-server', {}) -%}
+ListenPort={{ settings.get('listenport', '10051') }}
+{% if settings.get('logfile', '/var/log/zabbix/zabbix_server.log') !=
+       "syslog" -%}
+LogFile={{ settings.get('logfile', '/var/log/zabbix/zabbix_server.log') }}
+{%- endif %}
+LogFileSize=0
+PidFile=/var/run/zabbix/zabbix_server.pid
+DBHost={{ settings.get('dbhost', 'localhost') }}
+DBName={{ settings.get('dbname', 'zabbix') }}
+DBUser={{ settings.get('dbuser', 'zabbixuser') }}
+DBPassword={{ settings.get('dbpass', 'zabbixpass') }}
+DBSocket={{ settings.get('dbsocket', dbsocket) }}
+ListenIP={{ settings.get('listenip', '0.0.0.0') }}
+AlertScriptsPath=/usr/lib/zabbix/alertscripts
+ExternalScripts=/usr/lib/zabbix/externalscripts
+FpingLocation=/usr/bin/fping
+Fping6Location=/usr/bin/fping6
+{{ settings.get('extra_conf','') }}
