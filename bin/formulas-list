@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# dev tool
+# list details about included formulas
+
+set -e
+libdir="formulas-lib"
+flist="$libdir"/formulas.list
+list=$(cat "$flist")
+
+for fname in $list; do
+  fdir="${fname}-formula"
+  echo "formula: $fname"
+  echo "===="
+  if [ ! -d $fdir ]; then
+    echo "* not found"
+  fi
+  echo
+done
