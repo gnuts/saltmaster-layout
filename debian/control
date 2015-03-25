@@ -1,0 +1,15 @@
+Source: saltmaster-layout
+Section: admin
+Priority: extra
+Maintainer: Matthias Nuessle <mn@mawoh.de>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+Homepage: https://github.com/gnuts/saltmaster-layout
+
+Package: saltmaster-layout
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: utilities templates and formulas for salt
+ This package contains a proposed layout for a salt master as well as
+ some utilities and many formulas. Have a look at the documentation for
+ a starting point.
