@@ -1,3 +1,34 @@
+saltmaster-layout (0.3) stable; urgency=low
+
+  * still testing!
+  * added lots of formulas:
+
+    heartbeat
+    network-debian
+    quagga
+    squid
+    users
+    shorewall
+    apache
+    asterisk
+    bind
+    rsyslog
+    apt
+    cert
+    ddns-client
+    dhcpd
+    exim
+    hostapd
+    ntp
+    openvpn
+    pppoe
+    salt
+    ssh
+    zabbix
+
+
+ -- Matthias Nuessle <matthias.nuessle@mawoh.de>  Wed, 25 Mar 2015 22:02:09 +0100
+
 saltmaster-layout (0.2-dev) UNRELEASED; urgency=low
 
   * not released yet
