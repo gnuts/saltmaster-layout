@@ -1,0 +1,32 @@
+password zebra
+log file /var/log/quagga/zebra.log
+!
+!debug zebra events
+!debug zebra packet
+!debug zebra kernel
+!debug zebra rib
+!
+{%- if ripd is defined %}
+{%- for interface in ripd.interfaces %}
+interface {{ interface.name }}
+description {{ interface.description }}
+{%- if interface.ipaddresslist is defined %}
+{%- for address in interface.ipaddresslist %}
+{%- if address.nodeid == grains.id %}
+!ip address {{ address.ipaddress }}
+{%- endif %}
+{%- endfor %}
+multicast
+{%- endif %}
+ipv6 nd suppress-ra
+!
+{%- endfor %}
+{%- endif %}
+
+interface lo
+!
+ip forwarding
+!
+!
+line vty
+!

@@ -1,0 +1,38 @@
+{%- set routers    = bgpd.get('routers',[]) %}
+{%- set allowlist  = bgpd.get('allowlist',[]) %}
+{%- set neighbours = bgpd.get('neighbours',[]) %}
+password zebra
+hostname {{ grains.nodename }}.bgpd
+log file {{ logdir }}/bgpd.log
+!
+line vty
+!
+{%- for router in routers %}
+  {%- if router.nodeid == grains.id %}
+router bgp {{ router.as }}
+    bgp router-id {{ router.id }}
+    {%- for list in allowlist %}
+      {%- for network in list.networks %}
+    network {{ network }}
+      {%- endfor %}
+    {%- endfor %}
+    {%- for neighbour in neighbours %}
+    neighbor {{ neighbour.id }} remote-as {{ neighbour.as }}
+    neighbor {{ neighbour.id }} description {{ neighbour.desc }}
+    neighbor {{ neighbour.id }} password {{ neighbour.password }}
+      {%- for list in allowlist %}
+    neighbor {{ neighbour.id }} prefix-list network-list-{{ list.name }} {{ list.direction }}
+      {%- endfor %}
+    {%- endfor %}
+  {%- endif %}
+{%- endfor %}
+!
+! prefix-list
+!
+{%- for list in allowlist %}
+  {%- for network in list.networks %}
+ip prefix-list network-list-{{ list.name }} seq {{ loop.index * 5 }} permit {{ network }}
+  {%- endfor %}
+{%- endfor %}
+
+
