@@ -70,9 +70,10 @@ function formulas_add {
     else
       echo "branch: $fbranch url: $furl"
       echo
-      echo "press ENTER to add subtree to $fpath"
-      echo
+      echo -n "press ENTER to add subtree to $fpath"
       read
+      echo
+      echo
       set -e
       git subtree add -P "$fpath"  --squash "$furl" "$fbranch"
       set +e
