@@ -1,3 +1,9 @@
+saltmaster-layout (0.4-dev) UNRELEASED; urgency=low
+
+  * dev release
+
+ -- Matthias Nuessle <matthias.nuessle@mawoh.de>  Wed, 25 Mar 2015 22:06:20 +0100
+
 saltmaster-layout (0.3) stable; urgency=low
 
   * still testing!
