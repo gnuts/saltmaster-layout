@@ -1,0 +1,19 @@
+# HA Resources
+#
+# !!! THIS FILE IS MANAGED !!!
+# !!! CHANGES WILL BE LOST !!!
+#
+
+{%- for node in nodes %}
+{%- if node.resources is defined %}
+
+# resources primarily on node {{ node.name }}
+#
+{{ node.name }}
+{%- for resource in node.resources -%}
+{{ ' ' }}{{ resource }}
+{%- endfor %}
+
+{%- endif %}
+{%- endfor %}
+

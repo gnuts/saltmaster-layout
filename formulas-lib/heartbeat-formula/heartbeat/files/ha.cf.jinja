@@ -1,0 +1,21 @@
+# HA Resources
+#
+# !!! THIS FILE IS MANAGED !!!
+# !!! CHANGES WILL BE LOST !!!
+#
+
+logfacility     local0
+auto_failback off
+
+{%- for node in nodes %}
+{%- if node.id == grains.id %}
+{%- for neighbour in node.neighbours %}
+ucast {{ neighbour }}
+{%- endfor %}
+{%- endif %}
+{%- endfor %}
+
+{%- for node in nodes %}
+node {{ node.name }}
+{%- endfor %}
+
