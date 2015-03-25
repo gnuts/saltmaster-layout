@@ -51,11 +51,11 @@ function formulas_list {
 
 function formulas_process {
 
-  if [ "$1" != "add" -a "$1" != "pull" ]; then
-    fmode=$1;
-    shift
-  else
-    echo "formulas_process needs mod add or pull"
+  fmode=$1;
+  shift
+
+  if [ "$fmode" != "add" -a "$fmode" != "pull" ]; then
+    echo "formulas_process needs mode add or pull"
     exit 1
   fi
 
@@ -80,9 +80,7 @@ function formulas_process {
     echo -n "press ENTER to add subtree to $fpath"
     read
     echo
-    echo
-    git subtree $mode -P "$fpath"  --squash "$furl" "$fbranch"
-    echo
+    git subtree $fmode -P "$fpath"  --squash "$furl" "$fbranch"
     echo "formula $fname subtree command finished"
     echo
     echo
