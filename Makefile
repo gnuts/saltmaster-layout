@@ -82,26 +82,23 @@ install: clean update-doc
 	# create directories
 	#
 	mkdir -p $(INST_BINDIR)
-	#mkdir -p $(INST_SBINDIR)
+	mkdir -p $(INST_ETCDIR)
 	mkdir -p $(INST_USRSHAREDIR)
 	mkdir -p $(INST_USRSHAREDOCDIR)
 	mkdir -p $(INST_LIBDIR)
 	mkdir -p $(INST_LIBDIR)/formulas
 	mkdir -p $(INST_LIBDIR)/extensions
-	#mkdir -p $(INST_SITEDIR)
-	#mkdir -p $(INST_SITEDIR)/hosts
-	#mkdir -p $(INST_SITEDIR)/groups
-	#mkdir -p $(INST_SITEDIR)/files
-	#mkdir -p $(INST_SITEDIR)/clusters
-	#mkdir -p $(INST_SITEDIR)/states
-	#mkdir -p $(INST_SITEDIR)/config
 	
 	# install template and extensions
 	rsync -rv  template $(INST_USRSHAREDIR)/
 	rsync -rv  extensions  $(INST_LIBDIR)/
-	rsync -rv  lib $(INST_LIBDIR)/
+	rsync -rv  lib/ $(INST_LIBDIR)/
+	rsync -rv  etc/ $(INST_ETCDIR)/
 	chown -R root:root $(INST_USRSHAREDIR) $(INST_LIBDIR)
-	chmod -R u=rwX,go=rX $(INST_USRSHAREDIR) $(INST_LIBDIR) 
+	chmod -R u=rwX,go=rX $(INST_USRSHAREDIR) $(INST_LIBDIR) $(INST_ETCDIR) 
+
+	# copy makefile to template dir, too
+	cp -a $(INST_LIBDIR)/Makefile $(INST_USRSHAREDIR)/template/
 
 	# now for each formula:
 	# copy files from $(formulaname)-formula to $(doc)/formulas/$(formulaname)
