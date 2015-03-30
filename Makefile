@@ -118,8 +118,8 @@ install: clean update-doc
 	done
 
   # copy config files to doc dir too
-	cp /etc/callminions.conf $(INST_USRSHAREDOCDIR)/callminions.conf.example
-	cp /etc/salt.conf $(INST_USRSHAREDODIR)/salt.conf.example
+	cp etc/callminions.conf $(INST_USRSHAREDOCDIR)/callminions.conf.example
+	cp etc/salt.conf $(INST_USRSHAREDOCDIR)/salt.conf.example
 
 	# add formulas information to doc dir
 	echo "This package contains the following formulas (name, branch and url):" >$(INST_USRSHAREDOCDIR)/formulas.txt
