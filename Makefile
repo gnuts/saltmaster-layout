@@ -98,25 +98,28 @@ install: clean update-doc
 	#
 	# install template and extensions
 	#
-	rsync -r  template $(INST_USRSHAREDIR)/
-	rsync -r  extensions  $(INST_LIBDIR)/
-	rsync -r  lib/ $(INST_LIBDIR)/
-	rsync -r  etc/ $(INST_ETCDIR)/
+	rsync -r  --exclude '.keep' template $(INST_USRSHAREDIR)/
+	rsync -r  --exclude '.keep' extensions  $(INST_LIBDIR)/
+	rsync -r  --exclude '.keep' lib/ $(INST_LIBDIR)/
+	rsync -r  --exclude '.keep' etc/ $(INST_ETCDIR)/
 	chown -R root:root $(INST_USRSHAREDIR) $(INST_LIBDIR)
 	chmod -R u=rwX,go=rX $(INST_USRSHAREDIR) $(INST_LIBDIR) $(INST_ETCDIR) 
-	cp -a $(INST_LIBDIR)/Makefile $(INST_USRSHAREDIR)/template/
-
+	cp $(INST_LIBDIR)/Makefile $(INST_USRSHAREDIR)/template/
 	# 
 	# copy formulas to doc and lib
 	# 
 	formulas=$$(cut -d" " -f1 formulas-lib/formulas.conf) && \
 	for fname in $$formulas; do \
 		echo "install formula $$fname" ; \
-		rsync -r "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
+		rsync -r --exclude '.keep' "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
 		mkdir "$(INST_USRSHAREDOCDIR)/$${fname}" ; \
-		rsync -q formulas-lib/$${fname}-formula/* "$(INST_USRSHAREDOCDIR)/$${fname}/" ; \
-		rsync -qr "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
+		rsync -q --exclude '.keep' formulas-lib/$${fname}-formula/* "$(INST_USRSHAREDOCDIR)/$${fname}/" ; \
+		rsync -qr --exclude '.keep' "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
 	done
+
+  # copy config files to doc dir too
+	cp /etc/callminions.conf $(INST_USRSHAREDOCDIR)/callminions.conf.example
+	cp /etc/salt.conf $(INST_USRSHAREDODIR)/salt.conf.example
 
 	# add formulas information to doc dir
 	echo "This package contains the following formulas (name, branch and url):" >$(INST_USRSHAREDOCDIR)/formulas.txt
