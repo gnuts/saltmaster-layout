@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# bootstraplayout installs a salt master skeleton to the install dir
+
+base=/srv
+name=salt
+user=root
+group=salt
+mode="u=rwX,g=rwXs,o-rwx"
+
+template=/usr/share/saltmaster-layout/template
+
+echo
+echo "this will setup a saltmaster directory"
+read -ep "press ENTER to continue or CTRL-c to abort at any time"
+
+read -ep "base path: " -i "$base" base
+read -ep "name of the installation (will be appended to base path): " -i "$name" name
+read -ep "directory owner: " -i "$user" user
+read -ep "directory group: " -i "$group" group
+read -ep "directory permissions: " -i "$mode" mode
+
+
+echo "bootstrapping saltmaster installation"
+
+set -e
+
+# create dir
+dir="$base/$name"
+mkdir "$dir"
+
+# copy template there
+cp -vr $template/* "$dir"
+chown -vR $user:$group "$dir"
+chmod -vR $mode "$dir"
+
+echo
+echo "Done. Have a look at $dir"
