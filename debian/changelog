@@ -1,6 +1,8 @@
 saltmaster-layout (0.4-dev) UNRELEASED; urgency=low
 
-  * dev release
+  * add documentation to config files
+  * remove config dir, move files to /etc/saltmaster-layout/
+  * add config file examples to doc dir
 
  -- Matthias Nuessle <matthias.nuessle@mawoh.de>  Wed, 25 Mar 2015 22:06:20 +0100
 
