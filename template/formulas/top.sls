@@ -1,5 +1,3 @@
-# MAWOH SALTMASTER STATES
-#
 
 base:
   '*':
