@@ -37,9 +37,6 @@ INST_SITEDIR	= $(DESTDIR)/$(SITEDIR)
 SHELL	 		= /bin/bash
 
 
-BINFILES = salt-callminions salt-install-minion
-
-
 .PHONY: help build clean test doc docs update-doc install version release clean upload package
 
 help:
@@ -94,6 +91,7 @@ install: clean update-doc
 	#
 	install -g root -o root -m 755 bin/salt-callminions  $(INST_BINDIR)/
 	install -g root -o root -m 755 bin/salt-install-minion $(INST_BINDIR)/
+	install -g root -o root -m 755 bin/salt-bootstraplayout $(INST_BINDIR)/
 	
 	#
 	# install template and extensions
