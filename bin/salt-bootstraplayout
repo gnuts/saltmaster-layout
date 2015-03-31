@@ -5,7 +5,7 @@
 base=/srv
 name=salt
 user=root
-group=salt
+group=staff
 mode="u=rwX,g=rwX,o-rwx"
 
 template=/usr/share/saltmaster-layout/template

@@ -27,7 +27,7 @@ After installing the debian package, you can bootstrap your salt-master director
 
 It will ask some questions about directories and permissions. By default it will setup a directory structure like this:
 
-
+    /srv/salt
     ├── Makefile
     ├── formulas
     │   ├── formulamap.sls
@@ -37,4 +37,25 @@ It will ask some questions about directories and permissions. By default it will
         ├── hostmap.sls
         ├── hosts
         └── top.sls
-    
+
+
+By default, everybody in the group "staff" will have write access to the saltmaster pillar.
+
+Next, i recommend you enable revision control in this directory:
+
+    git init
+
+If you want to use the Makefile, you will also need git-flow
+
+    git flow init
+
+Accept all defaults of git-flow.
+
+Some basic constraints:
+
+* **Always work in branch develop! Never change anything in branch master!**
+* **Do not work as root** Everybody working with saltmaster-layout should have an user account and be member of group "staff" (or whatever you chose during bootstrap)
+
+
+How it works
+============    
