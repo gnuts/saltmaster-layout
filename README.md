@@ -131,4 +131,98 @@ This can be useful, if you have lots of hosts in your "servers" line.
 Release Management
 ==================
 
+The included Makefile is intended for teams working on the same saltmaster installation. It helps to avoid race conditions where
+multiple admins change the pillar and want to deploy their changes.
+
+When using the Makefile, the following rules apply:
+
+* /srv/salt/ is read only. You never change anything there. Never.
+* Each change implies that you roll a new release.
+* The only thing you do in /srv/salt is checking out a release.
+* If you need to change the pillar or a local formula, you need to clone the git repository of the salt installation in your own working directory.
+* you need to use git-flow. to make a new release, your changes have to be merged to the develop branch.
+* never commit anything directly to the master branch.
+* when checking in a new release, describe your changes in the tag message.
+
+This sounds like a lot, but it really helps to keep your salt pillar intact and transparent. It may be overkill, if you are the only one that changes the pillar.
+But even then it might be worth it if you for example need to roll back fast to a working version.
+
+You can also use this to set up a quality control instance.
+
+The workflow could be:
+
+* There is a development repository and a production repository. The dev repo is a fork of the prod repo.
+* An admin changes something in the pillar and pushes his changes to the dev repo.
+* He then creates a pull request in the production repository.
+* A QA guy takes on the pull request, does whatever is needed to audit the change, and finally accepts or rejects the pull request.
+* If the request is accepted, the QA person creates a new release.
+* The release is now available on the saltmaster and can be checked out.
+
+The Makefile supports a few commands:
+
+make help
+---------
+
+Shows a command summary
+
+make version
+------------
+
+Shows the currently checked out version
+
+make list
+---------
+
+Lists the last 10 releases
+
+make release
+------------
+
+Start a new release. You need to be on the develop branch. Everything must be commited.
+There must be no other release branch.
+
+At first this command will update the master and develop branches!
+
+The command will ask you for a version number. It automatically increases the last version by one, but you can change that if you need to.
+Then it creates a release branch and immediately pushes it to the repository.
+As long as your release is open, noone else can create a release, so make sure to finish your
+release in a timely manner.
+
+After the release has been started, do your final changes. Usually, there is nothing to do.
+The next thing to do is "make finish". In most cases you actually can create a release by calling
+
+    make release finish
+
+
+make finish
+-----------
+
+This command will merge develop to master, remove the release branch, create a release tag and push everything to the remote.
+
+make update
+-----------
+
+updates the master and develop branches
+
+
+make select
+-----------
+
+Fetchs the current repository from remote and shows a list of the latest versions.
+It asks you which version shall be checket out. By default, the latest one is selected.
+This checks out the release tag - the message about detached head is completely fine.
+
+**You should never change anything in /srv/salt, only check out releases!**
+
+other commands
+--------------
+
+make pushall
+make prune
+make listrc
+make lock
+make unlock
+make rc
+
+
 
