@@ -52,7 +52,10 @@ function start_tunnels {
         # dirty hack to allow ports:
         conn=$(echo "$host" | perl -p -e 's/:/ -p /')
         echo "starting tunnel for $conn"
-        ssh  -C -l root $conn -g -R 0.0.0.0:4505:127.0.0.1:4505 -R 0.0.0.0:4506:127.0.0.1:4506 'while true; do echo "tunnel open: $(hostname): $(uptime)";sleep 60;done' &
+        ssh  -C -l root $conn -g \
+          -R 0.0.0.0:4505:127.0.0.1:4505 \
+          -R 0.0.0.0:4506:127.0.0.1:4506 \
+          'while true; do echo "tunnel open: $(hostname): $(uptime)";sleep 60;done' &
 
         PIDS="$PIDS $!"
     done
