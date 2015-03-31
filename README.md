@@ -118,5 +118,17 @@ Add this line to sshd config at the minion-proxy:
 
     GatewayPorts clientspecified
 
+Add your minion "proxy" to /etc/saltmaster-layout/callminions.conf:
+
+    servers="host.example.ninja:22"
+
+Now you can start callminions in an interactive shell. It supports some keyboard commands that are explained on screen.
+
+Hint: the "connection test" command can be used to accept fingerprints of servers you contact for the first time.
+This can be useful, if you have lots of hosts in your "servers" line.
+
+
+Release Management
+==================
 
 
