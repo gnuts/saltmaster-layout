@@ -6,7 +6,7 @@ base=/srv
 name=salt
 user=root
 group=salt
-mode="u=rwX,g=rwXs,o-rwx"
+mode="u=rwX,g=rwX,o-rwx"
 
 template=/usr/share/saltmaster-layout/template
 
@@ -18,7 +18,7 @@ read -ep "base path: " -i "$base" base
 read -ep "name of the installation (will be appended to base path): " -i "$name" name
 read -ep "directory owner: " -i "$user" user
 read -ep "directory group: " -i "$group" group
-read -ep "directory permissions: " -i "$mode" mode
+read -ep "$base/$name permissions: " -i "$mode" mode
 
 
 echo "bootstrapping saltmaster installation"
@@ -33,6 +33,8 @@ mkdir "$dir"
 cp -vr $template/* "$dir"
 chown -vR $user:$group "$dir"
 chmod -vR $mode "$dir"
+echo "setting sticky bit for $dir"
+chmod -v g+s "$dir"
 
 echo
 echo "Done. Have a look at $dir"
