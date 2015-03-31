@@ -20,21 +20,21 @@ https://github.com/gnuts/saltmaster-layout/blob/master/formulas-lib/formulas.con
 Usage
 =====
 
-After installing the debian package, you can bootstrap your salt-master directory using::
+After installing the debian package, you can bootstrap your salt-master directory using:
 
     salt-bootstraplayout
 
 
-It will ask some questions about directories and permissions. By default it will setup a directory structure like this::
+It will ask some questions about directories and permissions. By default it will setup a directory structure like this:
 
 
-  ├── Makefile
-  ├── formulas
-  │   ├── formulamap.sls
-  │   └── top.sls
-  └── pillar
-      ├── auth
-      ├── hostmap.sls
-      ├── hosts
-      └── top.sls
-  
+    ├── Makefile
+    ├── formulas
+    │   ├── formulamap.sls
+    │   └── top.sls
+    └── pillar
+        ├── auth
+        ├── hostmap.sls
+        ├── hosts
+        └── top.sls
+    
