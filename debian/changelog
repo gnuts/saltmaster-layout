@@ -1,10 +1,11 @@
-saltmaster-layout (0.4-dev) UNRELEASED; urgency=low
+saltmaster-layout (0.5) stable; urgency=low
 
-  * add documentation to config files
+  * add documentation
   * remove config dir, move files to /etc/saltmaster-layout/
   * add config file examples to doc dir
+  * add salt-bootstraplayout utility
 
- -- Matthias Nuessle <matthias.nuessle@mawoh.de>  Wed, 25 Mar 2015 22:06:20 +0100
+ -- Matthias Nuessle <mn@mawoh.de>  Tue, 31 Mar 2015 15:57:47 +0200
 
 saltmaster-layout (0.3) stable; urgency=low
 
