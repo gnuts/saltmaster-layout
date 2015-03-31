@@ -1,4 +1,4 @@
-saltmaster-layout (0.4) stable; urgency=low
+saltmaster-layout (0.5) stable; urgency=low
 
   * add documentation
   * remove config dir, move files to /etc/saltmaster-layout/
