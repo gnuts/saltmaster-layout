@@ -1,3 +1,9 @@
+saltmaster-layout (0.6-dev) UNRELEASED; urgency=low
+
+  * next round
+
+ -- Matthias Nuessle <mn@mawoh.de>  Tue, 07 Apr 2015 12:32:48 +0200
+
 saltmaster-layout (0.5) stable; urgency=low
 
   * add documentation
