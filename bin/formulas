@@ -5,7 +5,7 @@
 # * subtree add included formulas
 # * subtree pull included formulas
 
-
+VERSION="__version__"
 LIBDIR="formulas-lib"
 FCONF="$LIBDIR/formulas.conf"
 set -e
@@ -16,6 +16,8 @@ MODE=$1
 shift
 
 function usage {
+  echo "this is formulas version $VERSION"
+  echo
   echo "usage: $0 <mode>"
   echo
   echo "modes:"

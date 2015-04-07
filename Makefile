@@ -70,7 +70,7 @@ test:
 
 
 doc docs update-doc:
-	#perl -p -i -e "s/___version___/$(DEBVERSION)/" conf.py index.rst
+	perl -p -i -e "s/___version___/$(DEBVERSION)/" $(INST_BINDIR)/* 
 	#make -f Makefile.sphinx html
 
 install: clean update-doc 

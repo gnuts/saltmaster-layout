@@ -2,6 +2,7 @@
 
 # bootstraplayout installs a salt master skeleton to the install dir
 
+VERSION="__version__"
 base=/srv
 name=salt
 user=root
@@ -10,6 +11,8 @@ mode="u=rwX,g=rwX,o-rwx"
 
 template=/usr/share/saltmaster-layout/template
 
+echo
+echo "this is salt-bootstraplayout version $VERSION"
 echo
 echo "this will setup a saltmaster directory"
 read -ep "press ENTER to continue or CTRL-c to abort at any time"

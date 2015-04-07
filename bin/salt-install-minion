@@ -15,7 +15,7 @@
 
 if [ $# != 2 -a $# != 4 ]
 then
-    echo "Aufruf: remote-minion-install.sh <host> <saltmaster> [proxyhost] [proxyport]"
+    echo "usage: remote-minion-install.sh <host> <saltmaster> [proxyhost] [proxyport]"
     exit
 elif [ $# == 4 ]
 then
@@ -27,10 +27,6 @@ fi
     SCRIPTPATH="$(dirname $(readlink -f $0))"
     SCRIPT="$SCRIPTPATH/bootstrap-salt.sh"
 
-    # SCRIPT
-    echo "#################################"
-    echo "Baue SSH-Verbindung zu $HOST auf."
-    echo "#################################"
-    sleep 3
+    echo "connecting to $HOST"
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "root@$HOST" "$PROXY bash -s" -- < "$SCRIPT" -A "$SALTMASTER"
 

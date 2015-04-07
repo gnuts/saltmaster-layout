@@ -5,6 +5,7 @@ conf="/srv/saltmaster/config/callminions.conf"
 maxruntime="28800"
 servers="xxx:22"
 
+VERSION="__version__"
 
 set -e
 source "$conf"
@@ -84,6 +85,11 @@ function kill_tunnels {
     fi
 }
 
+
+function show_version {
+  echo "callminions $VERSION"
+}
+
 tstart=$(date +%s)
 start_tunnels
 
@@ -104,6 +110,7 @@ while true; do
     echo "'r' restart all tunnels"
     echo "'k' kill all tunnels"
     echo "'t' connection test"
+    echo "'v' show version"
     echo "---"
     read -N 1 -t 130 x
     echo
@@ -128,6 +135,9 @@ while true; do
         echo
         echo "killing all tunnels"
         kill_tunnels
+        continue
+    elif [ "$x" == "v" ]; then
+        show_version
         continue
     else
         echo "unknown command"
