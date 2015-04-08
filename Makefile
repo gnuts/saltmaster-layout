@@ -74,7 +74,7 @@ doc docs update-doc:
 	#make -f Makefile.sphinx html
 
 update-binversion:
-	perl -p -i -e "s/___version___/$(DEBVERSION)/" $(INST_BINDIR)/* 
+	perl -p -i -e "s/__version__/$(DEBVERSION)/" $(INST_BINDIR)/* 
 
 install: clean update-doc 
 	@echo "installing $(PNAME) $(DEBVERSION) build $(BUILD)"
