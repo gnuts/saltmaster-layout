@@ -8,6 +8,7 @@ name=salt
 user=root
 group=staff
 mode="u=rwX,g=rwX,o-rwx"
+usegit="y"
 
 template=/usr/share/saltmaster-layout/template
 
@@ -22,7 +23,7 @@ read -ep "name of the installation (will be appended to base path): " -i "$name"
 read -ep "directory owner: " -i "$user" user
 read -ep "directory group: " -i "$group" group
 read -ep "$base/$name permissions: " -i "$mode" mode
-
+read -ep "init git and gitflow (y/n)? " -i "$usegit" usegit
 
 echo "bootstrapping saltmaster installation"
 
@@ -43,9 +44,11 @@ cd "$dir"
 
 echo "initialising git and git-flow"
 
-git init
-# stealing stdin makes git flow init use defaults
-true|git flow init
+if [ "$usegit" == "y" ]; then
+  git init
+  # stealing stdin makes git flow init use defaults
+  true|git flow init
+fi
 
 
 echo
