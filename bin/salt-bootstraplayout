@@ -39,5 +39,14 @@ chmod -vR $mode "$dir"
 echo "setting sticky bit for $dir"
 chmod -v g+s "$dir"
 
+cd "$dir"
+
+echo "initialising git and git-flow"
+
+git init
+# stealing stdin makes git flow init use defaults
+true|git flow init
+
+
 echo
 echo "Done. Have a look at $dir"
