@@ -5,7 +5,7 @@
 # * subtree add included formulas
 # * subtree pull included formulas
 
-
+VERSION="__version__"
 LIBDIR="formulas-lib"
 FCONF="$LIBDIR/formulas.conf"
 set -e
@@ -16,13 +16,18 @@ MODE=$1
 shift
 
 function usage {
-  echo "usage: $0 <mode>"
+  echo "this is formulas utility version $VERSION"
+  echo
+  echo "usage: $0 <mode> [formulas]"
   echo
   echo "modes:"
   echo
   echo "list    - show all formulas"
   echo "add     - subtree add missing formulas"
+  echo "pull    - subtree pull/update formulas"
   echo
+  echo "[formulas] - optionally specify, which formulas shall be processed"
+  echo "e.g. $0 pull \"openssh ntp shorewall\""
   echo "configuration file is: $FCONF"
   echo
   exit 1
@@ -65,8 +70,9 @@ function formulas_process {
     shift
   fi
 
-  echo "processing formulas. mode: $mode"
+  echo "processing formulas. mode: $fmode"
   echo "configured formulas: $fnames"
+  echo "press ENTER to continue"
   read
   for fname in $fnames; do
     fdir="${fname}-formula"

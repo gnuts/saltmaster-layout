@@ -2,14 +2,18 @@
 
 # bootstraplayout installs a salt master skeleton to the install dir
 
+VERSION="__version__"
 base=/srv
 name=salt
 user=root
 group=staff
 mode="u=rwX,g=rwX,o-rwx"
+usegit="y"
 
 template=/usr/share/saltmaster-layout/template
 
+echo
+echo "this is salt-bootstraplayout version $VERSION"
 echo
 echo "this will setup a saltmaster directory"
 read -ep "press ENTER to continue or CTRL-c to abort at any time"
@@ -19,7 +23,7 @@ read -ep "name of the installation (will be appended to base path): " -i "$name"
 read -ep "directory owner: " -i "$user" user
 read -ep "directory group: " -i "$group" group
 read -ep "$base/$name permissions: " -i "$mode" mode
-
+read -ep "init git and gitflow (y/n)? " -i "$usegit" usegit
 
 echo "bootstrapping saltmaster installation"
 
@@ -35,6 +39,17 @@ chown -vR $user:$group "$dir"
 chmod -vR $mode "$dir"
 echo "setting sticky bit for $dir"
 chmod -v g+s "$dir"
+
+cd "$dir"
+
+echo "initialising git and git-flow"
+
+if [ "$usegit" == "y" ]; then
+  git init
+  # stealing stdin makes git flow init use defaults
+  true|git flow init
+fi
+
 
 echo
 echo "Done. Have a look at $dir"
