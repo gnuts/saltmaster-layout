@@ -70,8 +70,11 @@ test:
 
 
 doc docs update-doc:
-	perl -p -i -e "s/___version___/$(DEBVERSION)/" $(INST_BINDIR)/* 
+	echo "nothing to do"
 	#make -f Makefile.sphinx html
+
+update-binversion:
+	perl -p -i -e "s/___version___/$(DEBVERSION)/" $(INST_BINDIR)/* 
 
 install: clean update-doc 
 	@echo "installing $(PNAME) $(DEBVERSION) build $(BUILD)"
@@ -123,6 +126,7 @@ install: clean update-doc
 	echo "This package contains the following formulas (name, branch and url):" >$(INST_USRSHAREDOCDIR)/formulas.txt
 	echo >>$(INST_USRSHAREDOCDIR)/formulas.txt
 	sort formulas-lib/formulas.conf >> $(INST_USRSHAREDOCDIR)/formulas.txt
+	make update-binversion
 
 package: docs debian-package move-packages
 debian-package:
@@ -175,5 +179,8 @@ status:
 upload: move-packages
 	rsync -vP ../packages/$(PNAME)*deb root@$(REPOSITORY):/tmp/ 
 	ssh -l root $(REPOSITORY) 'cd $(REPODIR) && for f in /tmp/*deb; do reprepro includedeb $(DISTNAME) $$f;done'
+
+copydeb:
+	rsync -Pva ../packages root@saltmaster:
 
 

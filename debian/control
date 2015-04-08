@@ -8,7 +8,7 @@ Homepage: https://github.com/gnuts/saltmaster-layout
 
 Package: saltmaster-layout
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, salt-master, make, git, git-flow
 Description: utilities templates and formulas for salt
  This package contains a proposed layout for a salt master as well as
  some utilities and many formulas. Have a look at the documentation for

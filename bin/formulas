@@ -70,8 +70,9 @@ function formulas_process {
     shift
   fi
 
-  echo "processing formulas. mode: $mode"
+  echo "processing formulas. mode: $fmode"
   echo "configured formulas: $fnames"
+  echo "press ENTER to continue"
   read
   for fname in $fnames; do
     fdir="${fname}-formula"

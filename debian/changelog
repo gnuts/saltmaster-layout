@@ -1,6 +1,7 @@
 saltmaster-layout (0.6-dev) UNRELEASED; urgency=low
 
-  * next round
+  * fix some help messages
+  * add dependencies to package
 
  -- Matthias Nuessle <mn@mawoh.de>  Tue, 07 Apr 2015 12:32:48 +0200
 
