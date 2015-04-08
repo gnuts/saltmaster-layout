@@ -1,4 +1,4 @@
-saltmaster-layout (0.6-dev) UNRELEASED; urgency=low
+saltmaster-layout (0.6) stable; urgency=low
 
   * fix some help messages
   * add dependencies to package
