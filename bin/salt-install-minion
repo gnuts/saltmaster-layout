@@ -24,7 +24,12 @@ fi
 
     HOST="$1"
     SALTMASTER="$2"
-    SCRIPTPATH="$(dirname $(readlink -f $0))"
+    # search bootstrap script in debian path, if not found
+    # look in install script path
+    SCRIPTPATH="/usr/lib/saltmaster-layout"
+    if [ ! -e "$SCRIPTPATH/bootstrap-salt.sh" ]; then
+      SCRIPTPATH="$(dirname $(readlink -f $0))"
+    fi
     SCRIPT="$SCRIPTPATH/bootstrap-salt.sh"
 
     echo "connecting to $HOST"
