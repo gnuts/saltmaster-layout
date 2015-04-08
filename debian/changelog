@@ -3,6 +3,7 @@ saltmaster-layout (0.6-dev) UNRELEASED; urgency=low
   * fix some help messages
   * add dependencies to package
   * update formulas from upstream: users, apache, bind
+  * fix bootstrap script path
 
  -- Matthias Nuessle <mn@mawoh.de>  Tue, 07 Apr 2015 12:32:48 +0200
 
