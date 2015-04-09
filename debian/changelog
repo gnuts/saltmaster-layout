@@ -1,3 +1,9 @@
+saltmaster-layout (0.7-dev) UNRELEASED; urgency=low
+
+  * bootstrapleyout now is less noisy
+
+ -- Matthias Nuessle <mn@mawoh.de>  Thu, 09 Apr 2015 13:30:20 +0200
+
 saltmaster-layout (0.6) stable; urgency=low
 
   * fix some help messages
