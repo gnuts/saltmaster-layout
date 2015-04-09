@@ -95,6 +95,7 @@ install: clean update-doc
 	install -g root -o root -m 755 bin/salt-callminions  $(INST_BINDIR)/
 	install -g root -o root -m 755 bin/salt-install-minion $(INST_BINDIR)/
 	install -g root -o root -m 755 bin/salt-bootstraplayout $(INST_BINDIR)/
+	install -g root -o root -m 755 bin/formula-doc $(INST_BINDIR)/
 	
 	#
 	# install template and extensions
@@ -159,7 +160,7 @@ bump:
 	@if [ -z "$(NEWVERSION)" ]; then echo "need NEWVERSION env var";exit 1;fi
 	@echo "starting release $(NEWVERSION)"
 	git flow release start "$(NEWVERSION)"
-	dch  --force-distribution -D stable -v "$(NEWVERSION)" "new release" 2>/dev/null
+	dch  --force-distribution -D stable -v "$(NEWVERSION)" "new release"
 	@echo -n "Debian new ";dpkg-parsechangelog|grep Version:
 	@echo "now run at least the following commands:"
 	@echo "# make package"
