@@ -7,7 +7,7 @@
 
 # it must understand paths with and without -formula extension!
 # this is an ugly shell script...do we need something more elaborate?
-
+# TODO: distinguish between local/package formulas, make selectable which to show?!
 # TODO: read DOCPATH from a configuration file?
 DOCPATH="/usr/share/doc/saltmaster-layout/formulas/ /srv/salt/formulas /srv/salt/formulas-dev ./formulas ./formulas-lib ./formulas-dev"
 
