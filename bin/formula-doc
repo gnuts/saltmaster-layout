@@ -59,6 +59,22 @@ function formulas_list {
   done
 }
 
+# formulas_pattern <pattern>
+# find all formula paths matching a pattern
+# if it finds more than one, bail out
+function formulas_pattern {
+  pattern=$1
+  if [ -z "$pattern" ]; then
+    echo "need a pattern..."
+    exit 1;
+  fi
+  list=$(formulas_search "$pattern"|grep -v '#')
+
+  num=$(echo "$list"|wc -l)
+  echo "# found $num variants:"
+  echo "$list"
+}
+
 function formulas_example {
   pattern=$1
   if [ -z "$pattern" ]; then
@@ -122,6 +138,9 @@ case "$command" in
     ;;
   r*)
     formulas_readme $@
+    ;;
+  p*)
+    formulas_pattern $@
     ;;
   *)
     echo "unknown command \"$command\""
