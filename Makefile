@@ -113,10 +113,9 @@ install: clean update-doc
 	formulas=$$(cut -d" " -f1 formulas-lib/formulas.conf) && \
 	for fname in $$formulas; do \
 		echo "install formula $$fname" ; \
+		mkdir -p "$(INST_USRSHAREDOCDIR)/formulas/$${fname}" ; \
 		rsync -r --exclude '.keep' "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
-		mkdir "$(INST_USRSHAREDOCDIR)/$${fname}" ; \
-		rsync -q --exclude '.keep' formulas-lib/$${fname}-formula/* "$(INST_USRSHAREDOCDIR)/$${fname}/" ; \
-		rsync -qr --exclude '.keep' "formulas-lib/$${fname}-formula/$${fname}" "$(INST_LIBDIR)/formulas/" ; \
+		rsync -q --exclude '.keep' formulas-lib/$${fname}-formula/* "$(INST_USRSHAREDOCDIR)/formulas/$${fname}/" ; \
 	done
 
   # copy config files to doc dir too
