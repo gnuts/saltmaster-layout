@@ -1,7 +1,8 @@
-saltmaster-layout (0.7-dev) UNRELEASED; urgency=low
+saltmaster-layout (0.7) stable; urgency=low
 
   * bootstrapleyout now is less noisy
   * add formula-doc command
+  * update debian-network-formula - interface syntax changed!
 
  -- Matthias Nuessle <mn@mawoh.de>  Thu, 09 Apr 2015 13:30:20 +0200
 
