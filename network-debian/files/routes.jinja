@@ -9,10 +9,10 @@
 # interface specific routes
 # =========================
 #
-{%- for iname,interface in interfaces.iteritems() %}
+{%- for interface in interfaces %}
 
 #
-# {{ iname }}
+# {{ interface.name }}
 #
 
 {%- if interface.routes is defined %}

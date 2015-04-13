@@ -1,8 +1,6 @@
 {% set map = salt['grains.filter_by']({
   'Debian': {
     'pkgs': [],
-    'pkgs_bridge': ['bridge-utils'],
-    'pkgs_vlan': ['vlan'],
     'confdir': '/etc/network',
 },
 }, grain='os', merge=salt['pillar.get']('network:lookup')) %}
