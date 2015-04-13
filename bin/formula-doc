@@ -1,0 +1,149 @@
+#!/bin/bash
+
+# tool for viewing documentation of installed formulas
+# list installed formulas
+# show readme
+# show example pillar
+
+# it must understand paths with and without -formula extension!
+# this is an ugly shell script...do we need something more elaborate?
+# TODO: distinguish between local/package formulas, make selectable which to show?!
+# TODO: read DOCPATH from a configuration file?
+DOCPATH="/usr/share/doc/saltmaster-layout/formulas/ /srv/salt/formulas /srv/salt/formulas-dev ./formulas ./formulas-lib ./formulas-dev"
+
+
+function usage {
+  cat <<EOL
+
+this is formula-doc __version__
+usage: $0 [command] [pattern]
+
+list      show list of formulas. If no pattern given, shows all formulas.
+example   show example pillar of formula. Requires pattern.
+readme    show readme of formula. Requires pattern.
+
+commands can be abbreviated:
+
+e for example, r for readme etc. As long as it is unique.
+
+EOL
+
+  exit 1
+}
+
+# formulaslist searchpattern
+#
+# list all formulas that match pattern
+# if no pattern, list all found formulas
+#
+# output is a path to a formula directory per line
+#
+function formulas_search {
+  pattern=$1
+
+  for p in $DOCPATH; do
+    [ ! -d "$p" ] && continue;
+    echo "# path: $p"
+    find "$p" -mindepth 1 -maxdepth 1 -type d -iname "*$pattern*"
+  done
+
+}
+
+# formulas_list searchpattern
+function formulas_list {
+  pattern=$1
+  list=$(formulas_search "$pattern"|grep -v '#')
+
+  for p in $list; do
+    basename $p|sed 's/-formula//'
+  done
+}
+
+# formulas_pattern <pattern>
+# find all formula paths matching a pattern
+# if it finds more than one, bail out
+function formulas_pattern {
+  pattern=$1
+  if [ -z "$pattern" ]; then
+    echo "need a pattern..."
+    exit 1;
+  fi
+  list=$(formulas_search "$pattern"|grep -v '#')
+
+  num=$(echo "$list"|wc -l)
+  echo "# found $num variants:"
+  echo "$list"
+}
+
+function formulas_example {
+  pattern=$1
+  if [ -z "$pattern" ]; then
+    echo "need a pattern"
+    exit 1;
+  fi
+  list=$(formulas_search "$pattern"|grep -v '#')
+
+  for p in $list; do
+    #basename $p|sed 's/-formula//'
+    f="$p/pillar.example"
+    echo "showing $f"
+    if [ ! -e "$f" ]; then
+      echo "error: pillar example file not found."
+      exit 1
+    fi
+    less "$f"
+    exit 0
+  done
+}
+
+function formulas_readme {
+  pattern=$1
+  if [ -z "$pattern" ]; then
+    echo "need a pattern"
+    exit 1;
+  fi
+  list=$(formulas_search "$pattern"|grep -v '#')
+
+  for p in $list; do
+    f=$(find "$p" -maxdepth 1 -type f -iname 'readme.*'|head -n1)
+    echo "showing $f"
+    less "$f"
+    exit 0
+  done
+
+}
+
+
+##
+## main
+##
+
+command=$1
+shift
+if [ -z "$command" ]; then
+  echo "specify a command"
+  usage
+fi
+
+
+case "$command" in
+  s*)
+    formulas_search $@
+    ;;
+  l*)
+    formulas_list $@
+    ;;
+  e*)
+    formulas_example $@
+    ;;
+  r*)
+    formulas_readme $@
+    ;;
+  p*)
+    formulas_pattern $@
+    ;;
+  *)
+    echo "unknown command \"$command\""
+    usage
+    ;;
+esac

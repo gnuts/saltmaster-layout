@@ -12,15 +12,14 @@ network:
       comment: 'default route'
 
   interfaces:
-    'eth0':
+    - name: 'eth0'
       comment: "test interface"
       enabled: True
       proto: static
       type: inet
       address: 192.168.1.130
       netmask: 24
-    'eth0ipv6':
-      name: 'eth0'
+    - name: 'eth0'
       comment: "test interface"
       proto: static
       type: inet6
