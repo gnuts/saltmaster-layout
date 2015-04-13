@@ -24,4 +24,10 @@ iface {{ interface.name }} {{ interface.type }} {{ interface.proto }}
   up /etc/network/routes
 {%- endif %}  
 
+{%- if interface.options is defined %}
+{%-   for option in interface.options %}
+  {{ option }}
+{%- endfor %}
+{%- endif %}
+
 {%- endfor %}

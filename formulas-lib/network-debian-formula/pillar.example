@@ -25,5 +25,12 @@ network:
       type: inet6
       address: fd66::1
       netmask: 64
+    'br0':
+      comment: 'This is a bridge'
+      proto: static
+      address: 192.168.2.130
+      netmask: 24
+      options:
+        - bridge_ports eth0
 
 
