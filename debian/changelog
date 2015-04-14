@@ -1,3 +1,9 @@
+saltmaster-layout (0.8.1) stable; urgency=low
+
+  * update network debian formula from upstream
+
+ -- Matthias Nuessle <matthias.nuessle@mawoh.de>  Tue, 14 Apr 2015 10:32:17 +0200
+
 saltmaster-layout (0.7-dev) UNRELEASED; urgency=low
 
   * bootstrapleyout now is less noisy
