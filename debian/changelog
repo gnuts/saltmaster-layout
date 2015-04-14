@@ -1,3 +1,9 @@
+saltmaster-layout (0.8.2) stable; urgency=low
+
+  * no new features
+
+ -- Matthias Nuessle <matthias.nuessle@mawoh.de>  Tue, 14 Apr 2015 10:36:12 +0200
+
 saltmaster-layout (0.8.1) stable; urgency=low
 
   * update network debian formula from upstream
