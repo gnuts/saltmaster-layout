@@ -1,13 +1,26 @@
+saltmaster-layout (0.8.2) stable; urgency=low
+
+  * no new features
+
+ -- Matthias Nuessle <matthias.nuessle@mawoh.de>  Tue, 14 Apr 2015 10:36:12 +0200
+
 saltmaster-layout (0.8.1) stable; urgency=low
 
   * update network debian formula from upstream
 
  -- Matthias Nuessle <matthias.nuessle@mawoh.de>  Tue, 14 Apr 2015 10:32:17 +0200
 
-saltmaster-layout (0.7-dev) UNRELEASED; urgency=low
+saltmaster-layout (0.8) stable; urgency=low
+
+  * no changes, just to avoid version mismatch
+
+ -- Matthias Nuessle <mn@mawoh.de>  Mon, 13 Apr 2015 11:26:18 +0200
+
+saltmaster-layout (0.7) stable; urgency=low
 
   * bootstrapleyout now is less noisy
   * add formula-doc command
+  * update debian-network-formula - interface syntax changed!
 
  -- Matthias Nuessle <mn@mawoh.de>  Thu, 09 Apr 2015 13:30:20 +0200
 

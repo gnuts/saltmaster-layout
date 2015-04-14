@@ -159,7 +159,7 @@ bump:
 	@if [ -z "$(NEWVERSION)" ]; then echo "need NEWVERSION env var";exit 1;fi
 	@echo "starting release $(NEWVERSION)"
 	git flow release start "$(NEWVERSION)"
-	dch  --force-distribution -D stable -v "$(NEWVERSION)" "new release"
+	dch  --force-distribution -D stable -b -v "$(NEWVERSION)" "new release"
 	@echo -n "Debian new ";dpkg-parsechangelog|grep Version:
 	@echo "now run at least the following commands:"
 	@echo "# make package"
